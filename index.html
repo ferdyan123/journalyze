@@ -50,18 +50,55 @@ input[type="date"]{color-scheme:dark;}
 :root[data-theme="light"] input[type="date"]{color-scheme:light;}
 
 /* ══ TOPBAR ══ */
-.topbar{background:var(--bg2);border-bottom:1px solid var(--border);padding:0 20px;display:flex;align-items:center;justify-content:space-between;height:52px;position:sticky;top:0;z-index:300;gap:8px;transition:background .35s;}
+.topbar{background:var(--bg2);border-bottom:1px solid var(--border);padding:0 16px;display:flex;align-items:center;justify-content:space-between;height:52px;position:sticky;top:0;z-index:300;gap:8px;transition:background .35s, height .25s ease;}
+.topbar.scrolled{height:44px;}
 .brand-logo{font-family:'Cormorant Garamond',serif;font-size:18px;font-weight:700;color:var(--gold2);white-space:nowrap;flex-shrink:0;}
 .brand-logo em{font-style:italic;color:var(--gold3);}
 .brand-tag{font-family:'JetBrains Mono',monospace;font-size:8px;letter-spacing:2px;text-transform:uppercase;color:var(--text3);margin-left:8px;}
-.page-tabs{display:flex;gap:2px;overflow-x:auto;flex:1;justify-content:center;}
+
+/* ── IG-style tabs ── */
+.page-tabs{display:flex;gap:0;overflow-x:auto;flex:1;justify-content:center;}
 .page-tabs::-webkit-scrollbar{display:none;}
-.ptab{font-family:'JetBrains Mono',monospace;font-size:8px;letter-spacing:.8px;text-transform:uppercase;padding:5px 11px;border-radius:5px;cursor:pointer;border:1px solid transparent;background:transparent;color:var(--text3);transition:all .2s;white-space:nowrap;}
-.ptab:hover{color:var(--text2);background:var(--bg4);}
-.ptab.active{background:var(--gold-bg);border-color:var(--gold-bd);color:var(--gold2);}
+.ptab{
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  gap:2px;padding:6px 10px;
+  border:none;border-bottom:2px solid transparent;
+  background:transparent;
+  color:var(--text3);
+  cursor:pointer;
+  font-family:'Outfit',sans-serif;
+  font-size:9px;font-weight:500;letter-spacing:.3px;
+  transition:all .2s;white-space:nowrap;
+  position:relative;
+  -webkit-tap-highlight-color:transparent;
+  min-width:52px;
+}
+.ptab-icon{font-size:17px;line-height:1;transition:transform .2s;}
+.ptab-label{font-family:'JetBrains Mono',monospace;font-size:7px;letter-spacing:.8px;text-transform:uppercase;line-height:1;}
+.ptab:hover{color:var(--text2);}
+.ptab:hover .ptab-icon{transform:scale(1.1);}
+.ptab.active{color:var(--gold2);border-bottom-color:var(--gold2);}
+.ptab.active .ptab-icon{transform:scale(1.08);}
+
+/* Tablet — compress sedikit */
+@media(max-width:1024px){
+  .ptab{padding:5px 7px;min-width:44px;}
+  .ptab-icon{font-size:15px;}
+}
+/* Mobile ≤768 — topbar tersembunyi, ganti bot-nav */
+@media(max-width:768px){
+  .topbar{display:none;}
+}
+
 .theme-pill{display:flex;background:var(--bg4);border:1px solid var(--border);border-radius:99px;padding:2px;gap:1px;flex-shrink:0;}
 .topt{padding:4px 9px;border-radius:99px;font-size:10px;font-weight:600;cursor:pointer;border:none;background:transparent;color:var(--text3);font-family:'Outfit',sans-serif;transition:all .2s;}
 .topt.active{background:var(--bg2);color:var(--text);box-shadow:var(--shadow2);}
+
+/* Topbar scrolled — icon only, hide label */
+.topbar.scrolled{height:44px;}
+.topbar.scrolled .ptab{padding:4px 8px;gap:0;}
+.topbar.scrolled .ptab-label{display:none;}
+.topbar.scrolled .ptab-icon{font-size:18px;}
 
 /* ══ LAYOUT ══ */
 .main{max-width:1200px;margin:0 auto;padding:28px 20px 80px;}
@@ -683,7 +720,7 @@ hr.div{border:none;border-top:1px solid var(--border);margin:14px 0;}
 @media(max-width:1200px){.flt-stats-row{grid-template-columns:repeat(4,1fr);}.flt-dd-row{grid-template-columns:1fr 1fr 1fr auto;}}
 @media(max-width:1024px){.g12{grid-template-columns:1fr}.g3{grid-template-columns:1fr 1fr}.g4{grid-template-columns:1fr 1fr}.stat-row{grid-template-columns:1fr 1fr}.main{padding:22px 16px 60px}.flt-dd-row{grid-template-columns:1fr 1fr;}}
 @media(max-width:768px){.g12{grid-template-columns:1fr}.g2{grid-template-columns:1fr}.g3{grid-template-columns:1fr}.frow{grid-template-columns:1fr}.frow.f3{grid-template-columns:1fr 1fr}.ph{flex-direction:column;align-items:flex-start}.main{padding:16px 14px 60px}.flt-stats-row{grid-template-columns:1fr 1fr}.flt-dd-row{grid-template-columns:1fr 1fr;}}
-@media(max-width:480px){.stat-row{grid-template-columns:1fr 1fr}.page-tabs{display:none}.brand-tag{display:none}.main{padding:12px 14px 60px}.ph-title{font-size:24px}.flt-stats-row{grid-template-columns:1fr 1fr}.flt-dd-row{grid-template-columns:1fr;}}
+@media(max-width:480px){.stat-row{grid-template-columns:1fr 1fr}.brand-tag{display:none}.main{padding:12px 14px 60px}.ph-title{font-size:24px}.flt-stats-row{grid-template-columns:1fr 1fr}.flt-dd-row{grid-template-columns:1fr;}}
 
 /* Weekly filter: fix dropdown stack on mobile */
 @media(max-width:768px){
@@ -1585,14 +1622,14 @@ hr.div{border:none;border-top:1px solid var(--border);margin:14px 0;}
     <div class="brand-tag">Suite</div>
   </div>
   <div class="page-tabs">
-    <button class="ptab active" data-page="home">🏠 Home</button>
-    <button class="ptab" data-page="risk">⚖️ Risiko</button>
-    <button class="ptab" data-page="plan">📅 Plan</button>
-    <button class="ptab" data-page="data">📋 Jurnal</button>
-    <button class="ptab" data-page="filter">🔍 Filter</button>
-    <button class="ptab" data-page="weekly">📆 Mingguan</button>
-    <button class="ptab" data-page="monthly">📊 Bulanan</button>
-    <button class="ptab" data-page="news">📰 News</button>
+    <button class="ptab active" data-page="home"><span class="ptab-icon">🏠</span><span class="ptab-label">Home</span></button>
+    <button class="ptab" data-page="risk"><span class="ptab-icon">⚖️</span><span class="ptab-label">Risiko</span></button>
+    <button class="ptab" data-page="plan"><span class="ptab-icon">📅</span><span class="ptab-label">Plan</span></button>
+    <button class="ptab" data-page="data"><span class="ptab-icon">📋</span><span class="ptab-label">Jurnal</span></button>
+    <button class="ptab" data-page="filter"><span class="ptab-icon">🔍</span><span class="ptab-label">Filter</span></button>
+    <button class="ptab" data-page="weekly"><span class="ptab-icon">📆</span><span class="ptab-label">Mingguan</span></button>
+    <button class="ptab" data-page="monthly"><span class="ptab-icon">📊</span><span class="ptab-label">Bulanan</span></button>
+    <button class="ptab" data-page="news"><span class="ptab-icon">📰</span><span class="ptab-label">News</span></button>
   </div>
   <div class="theme-pill">
     <button class="topt active" id="opt-dark" onclick="setTheme('dark')">🌙 Dark</button>
@@ -5040,9 +5077,15 @@ function closeMoreDrawer(){
   window.addEventListener('scroll',function(){
     const y=window.scrollY||window.pageYOffset;
     const nav=document.getElementById('bot-nav');
-    if(!nav) return;
-    if(y>60) nav.classList.add('scrolled');
-    else nav.classList.remove('scrolled');
+    const topbar=document.querySelector('.topbar');
+    if(nav){
+      if(y>60) nav.classList.add('scrolled');
+      else nav.classList.remove('scrolled');
+    }
+    if(topbar){
+      if(y>40) topbar.classList.add('scrolled');
+      else topbar.classList.remove('scrolled');
+    }
     lastY=y;
   },{passive:true});
 })();
